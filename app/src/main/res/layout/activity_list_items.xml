@@ -29,12 +29,12 @@
         android:text="CheckBox" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/switch2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnWeight="1"
-        android:gravity="fill"
-        android:text="@string/switchName"/>
+        android:layout_gravity="fill"
+        android:text="@string/switchName" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -43,5 +43,19 @@
         android:layout_columnWeight="1"
         android:layout_gravity="fill"
         app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Back"
+        android:text="Back" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Forward"
+        android:text="Home" />
 
 </GridLayout>
