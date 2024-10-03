@@ -7,4 +7,9 @@
     <string name="password_text">mot de passe</string>
     <string name="loginHint">se connecter nom</string>
     <string name="switchName">Qu\'est-ce que cela fait ?</string>
+    <string name="dialog_title">Confirmer la sortie</string>
+    <string name="dialog_message">Êtes-vous sûr de vouloir terminer cette activité ?</string>
+    <string name="ok">D\'accord</string>
+    <string name="cancel">Annuler</string>
+    <string name="checkbox_text">Cocher pour quitter</string>
 </resources>

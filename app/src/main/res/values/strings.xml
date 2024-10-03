@@ -4,6 +4,11 @@
     <string name="ButtonText">I\’m a button</string>
     <string name="login_text">Login</string>
     <string name="password_text">password</string>
-    <string name="loginHint">login name</string>
+    <string name="loginHint">Enter Login ID</string>
     <string name="switchName">What does this do?</string>
+    <string name="dialog_title">Confirm Exit</string>
+    <string name="dialog_message">Are you sure you want to finish this activity?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="checkbox_text">Check to exit</string>
 </resources>
