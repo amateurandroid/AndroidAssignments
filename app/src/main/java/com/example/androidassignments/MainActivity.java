@@ -1,10 +1,8 @@
 package com.example.androidassignments;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +14,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +26,13 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Button forwardButton = findViewById(R.id.forwardButton);//replace with yoru button id
+        Button forwardButton = findViewById(R.id.forwardButton);
         forwardButton.setOnClickListener(this::openListItemsActivity);
 
     }
-    // Step 2: Click handler to start ListItemsActivity
     private void openListItemsActivity(View view) {
         Intent intent = new Intent(this, ListItemsActivity.class);
-        startActivityForResult(intent, 10); // Start activity for result
+        startActivityForResult(intent, 10);
     }
     public void Forward(View view) {
         Intent intent = new Intent(this, LoginActivity.class);

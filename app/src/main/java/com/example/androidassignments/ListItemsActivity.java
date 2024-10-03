@@ -1,5 +1,4 @@
 package com.example.androidassignments;
-import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +11,6 @@ import android.widget.ImageButton;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -26,9 +23,8 @@ import android.widget.Toast;
 public class ListItemsActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 10;
     private static final int REQUEST_CAMERA_PERMISSION = 1;
-    private static final int REQUEST_IMAGE_CAPTURE = 2; // Use a different request code for capturing image
-    private ImageButton imageButton; // Declare the imageButton variable
-    private static final int  REQUEST_LISTITEMS = 10;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
+    private ImageButton imageButton;
     private CheckBox checkBox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +39,16 @@ public class ListItemsActivity extends AppCompatActivity {
         imageButton = findViewById(R.id.imageButton);
         imageButton.setOnClickListener(v -> openCamera());
 
-        // Step 2: Find the Switch by its ID
         Switch mySwitch = findViewById(R.id.mySwitch);
 
-        // Step 3: Set OnCheckedChangeListener
         mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Step 4: Show Toast messages based on the switch state
                 String text = isChecked ? "Switch is On" : "Switch is Off";
                 int duration = isChecked ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG;
 
                 Toast toast = Toast.makeText(ListItemsActivity.this, text, duration);
-                toast.show(); // Display the Toast message
+                toast.show();
             }
         });
         checkBox = findViewById(R.id.checkBox);
@@ -64,17 +57,6 @@ public class ListItemsActivity extends AppCompatActivity {
                 showFinishConfirmationDialog();
             }
         });
-    }
-
-    private void setRequestCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Request camera permission
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
-        } else {
-            // Permission already granted, open the camera
-            openCamera();
-        }
     }
 
     private void openCamera() {
@@ -86,7 +68,7 @@ public class ListItemsActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera(); // Permission granted, open camera
+                openCamera();
             } else {
                 Toast.makeText(this, "No Camera Permission ", Toast.LENGTH_SHORT).show();
             }
@@ -165,20 +147,18 @@ public class ListItemsActivity extends AppCompatActivity {
         Log.i("ListItemsActivity", "onRestoreInstanceState called");
     }
 
-    // Step 3: Handle the result from ListItemsActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageButton.setImageBitmap(imageBitmap);
+            Bitmap imgBitmap = (Bitmap) extras.get("data");
+            imageButton.setImageBitmap(imgBitmap);
             Log.i("ListItemsActivity", "Image Captured & Saved");
             Toast.makeText(this,"Captured",Toast.LENGTH_SHORT).show();
         }
     }
 
-        // Step 2: Create the print method
         public void print (String message){
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
