@@ -29,6 +29,17 @@ public class MainActivity extends AppCompatActivity {
         Button forwardButton = findViewById(R.id.forwardButton);
         forwardButton.setOnClickListener(this::openListItemsActivity);
 
+        Button startChatButton = findViewById(R.id.button_start_chat);
+        startChatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //starting ChatWindow activity
+                Intent intent = new Intent(MainActivity.this, ChatWindow.class);
+                startActivity(intent);
+                Log.i("MainActivity", "User clicked Start Chat");
+            }
+        });
+
     }
     private void openListItemsActivity(View view) {
         Intent intent = new Intent(this, ListItemsActivity.class);

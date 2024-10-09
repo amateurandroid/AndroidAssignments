@@ -12,4 +12,6 @@
     <string name="ok">D\'accord</string>
     <string name="cancel">Annuler</string>
     <string name="checkbox_text">Cocher pour quitter</string>
+    <string name="start_chat">Commencer la discussion</string>
+    <string name="sendButton">Envoyer</string>
 </resources>
