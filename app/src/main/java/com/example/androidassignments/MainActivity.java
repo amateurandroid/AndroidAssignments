@@ -2,6 +2,9 @@ package com.example.androidassignments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -33,18 +36,28 @@ public class MainActivity extends AppCompatActivity {
         startChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //starting ChatWindow activity
                 Intent intent = new Intent(MainActivity.this, ChatWindow.class);
                 startActivity(intent);
                 Log.i("MainActivity", "User clicked Start Chat");
             }
         });
 
+        Button testToolbarButton = findViewById(R.id.button_test_toolbar);
+        testToolbarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TestToolbar.class);
+                startActivity(intent);
+                Log.i("MainActivity", "User clicked Test Toolbar");
+            }
+        });
     }
+
     private void openListItemsActivity(View view) {
         Intent intent = new Intent(this, ListItemsActivity.class);
         startActivityForResult(intent, 10);
     }
+
     public void Forward(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -91,9 +104,10 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         Log.i("MainActivity", "onRestoreInstanceState called");
     }
+
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 10) {
+        if (requestCode == 10) {
             if (resultCode == Activity.RESULT_OK) {
                 String messagePassed = data.getStringExtra("Response");
 
@@ -103,6 +117,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
 }

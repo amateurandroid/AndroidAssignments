@@ -26,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
+//sdfsdfsd
+
         sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
 
         String savedEmail = sharedPreferences.getString("DefaultEmail", "email@domain.com");

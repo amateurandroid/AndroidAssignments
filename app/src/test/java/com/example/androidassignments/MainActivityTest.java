@@ -2,7 +2,6 @@ package com.example.androidassignments;
 
 import static org.junit.Assert.*;
 import static org.robolectric.Shadows.shadowOf;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -103,53 +102,47 @@ public class MainActivityTest {
     }
 
 
-
     @Test
     public void testOnStart() {
-        // Simulate onStart lifecycle method.
+
         mainActivity = Robolectric.buildActivity(MainActivity.class).create().start().get();
 
-        // Verify that the log message for onStart is correct.
         assertTrue(ShadowLog.getLogs().stream().anyMatch(log ->
                 log.tag.equals("MainActivity") && log.msg.equals("onCreate called")));
     }
 
     @Test
     public void testOnResume() {
-        // Simulate onResume lifecycle method.
+
         mainActivity = Robolectric.buildActivity(MainActivity.class).create().start().resume().get();
 
-        // Verify that the log message for onResume is correct.
         assertTrue(ShadowLog.getLogs().stream().anyMatch(log ->
                 log.tag.equals("MainActivity") && log.msg.equals("onResume called")));
     }
 
     @Test
     public void testOnPause() {
-        // Simulate onPause lifecycle method.
+
         mainActivity = Robolectric.buildActivity(MainActivity.class).create().start().resume().pause().get();
 
-        // Verify that the log message for onPause is correct.
         assertTrue(ShadowLog.getLogs().stream().anyMatch(log ->
                 log.tag.equals("MainActivity") && log.msg.equals("onPause called")));
     }
 
     @Test
     public void testOnStop() {
-        // Simulate onStop lifecycle method.
+
         mainActivity = Robolectric.buildActivity(MainActivity.class).create().start().resume().stop().get();
 
-        // Verify that the log message for onStop is correct.
         assertTrue(ShadowLog.getLogs().stream().anyMatch(log ->
                 log.tag.equals("MainActivity") && log.msg.equals("onStop called")));
     }
 
     @Test
     public void testOnDestroy() {
-        // Simulate onDestroy lifecycle method.
+
         mainActivity = Robolectric.buildActivity(MainActivity.class).create().start().resume().destroy().get();
 
-        // Verify that the log message for onDestroy is correct.
         assertTrue(ShadowLog.getLogs().stream().anyMatch(log ->
                 log.tag.equals("MainActivity") && log.msg.equals("onDestroy called")));
     }

@@ -26,6 +26,7 @@ public class ListItemsActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 2;
     private ImageButton imageButton;
     private CheckBox checkBox;
+    private Switch mySwitch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +45,28 @@ public class ListItemsActivity extends AppCompatActivity {
         mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                System.out.println("asdkfhbsdbfk");
                 String text = isChecked ? "Switch is On" : "Switch is Off";
                 int duration = isChecked ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG;
 
-                Toast toast = Toast.makeText(ListItemsActivity.this, text, duration);
-                toast.show();
+
+                Toast.makeText(ListItemsActivity.this,text,duration).show();
+
             }
         });
+
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(ListItemsActivity.this, "Switch is ON", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ListItemsActivity.this, "Switch is OFF", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         checkBox = findViewById(R.id.checkBox);
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {

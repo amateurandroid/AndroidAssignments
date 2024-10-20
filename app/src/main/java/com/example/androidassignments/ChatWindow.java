@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -46,7 +45,6 @@ public class ChatWindow extends AppCompatActivity {
             return insets;
         });
 
-        //set onClickListener for the Send button
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,17 +53,14 @@ public class ChatWindow extends AppCompatActivity {
                     chatMessages.add(message);
                     messageEditText.setText("");
                     chatAdapter.notifyDataSetChanged(); //notifying adapter data changed
-
             }
          }
         });
     }
 
-    //inner class extending ArrayAdapter<String>
     private class ChatAdapter extends ArrayAdapter<String> {
         public ChatAdapter(Context ctx) {
             super(ctx, 0, chatMessages);
-
         }
 
         //returns the chat message at a specific position in the list
@@ -80,30 +75,22 @@ public class ChatWindow extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            // Create a LayoutInflater object
             LayoutInflater inflater = ChatWindow.this.getLayoutInflater();
 
             View result;
 
-            // Check if the position is even or odd
             if (position % 2 == 0) {
-                // Inflate the incoming message layout for even positions
                 result = inflater.inflate(R.layout.chat_row_incoming, null);
             } else {
-                // Inflate the outgoing message layout for odd positions
                 result = inflater.inflate(R.layout.chat_row_outgoing, null);
             }
 
-            // Get the TextView from the inflated layout
             TextView getMessage = (TextView)result.findViewById(R.id.message_text);
             getMessage.setText(getItem(position));
 
-            // Set the text for the TextView with the message at the specified position
 
-            // Return the view to be displayed in the ListView
             return result;
         };
-
 
     }
 }
