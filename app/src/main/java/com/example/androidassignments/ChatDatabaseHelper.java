@@ -41,7 +41,6 @@ public class ChatDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Insert a new message into the database
     public long insertMessage(String message) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -57,7 +56,6 @@ public class ChatDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    // Get all messages from the database
     public Cursor getMessages() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(TABLE_NAME, new String[]{KEY_MESSAGE}, null, null, null, null, null);
