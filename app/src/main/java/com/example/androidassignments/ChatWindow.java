@@ -1,6 +1,11 @@
 package com.example.androidassignments;
+
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,66 +14,128 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import java.util.ArrayList;
+import android.os.AsyncTask;
+import android.widget.Toast;
+
 
 public class ChatWindow extends AppCompatActivity {
+
+    private static final String ACTIVITY_NAME = "ChatWindow";
     private ListView chatListView;
     private EditText messageEditText;
     private Button sendButton;
-    ArrayList<String> chatMessages;
-    ChatAdapter chatAdapter;
+    private ArrayList<String> chatMessages;
+    private ChatAdapter chatAdapter;
+    private ChatDatabaseHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chat_window);
 
-        //initializing the variables
         chatListView = findViewById(R.id.chatListView);
         messageEditText = findViewById(R.id.messageEditText);
         sendButton = findViewById(R.id.sendButton);
         chatMessages = new ArrayList<>();
 
-        //initializing the ChatAdapter and set it to the ListView
-        chatAdapter = new ChatAdapter(ChatWindow.this);
+        chatAdapter = new ChatAdapter(ChatWindow.this, chatMessages);
         chatListView.setAdapter(chatAdapter);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        dbHelper = new ChatDatabaseHelper(this);
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = messageEditText.getText().toString().trim();
-                if (!message.isEmpty()) {
-                    chatMessages.add(message);
-                    messageEditText.setText("");
-                    chatAdapter.notifyDataSetChanged(); //notifying adapter data changed
+        db = dbHelper.getWritableDatabase();
+
+        new LoadMessagesTask().execute();
+
+        sendButton.setOnClickListener(v -> {
+            String message = messageEditText.getText().toString().trim();
+            if (!message.isEmpty()) {
+                new SendMessageTask().execute(message);
             }
-         }
         });
     }
 
+    private class LoadMessagesTask extends AsyncTask<Void, Void, ArrayList<String>> {
+
+        @Override
+        protected ArrayList<String> doInBackground(Void... voids) {
+            ArrayList<String> messages = new ArrayList<>();
+            Cursor cursor = db.query(
+                    ChatDatabaseHelper.TABLE_NAME,
+                    new String[]{ChatDatabaseHelper.KEY_MESSAGE},
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    int messageColumnIndex = cursor.getColumnIndex(ChatDatabaseHelper.KEY_MESSAGE);
+                    if (messageColumnIndex != -1) {
+                        String message = cursor.getString(messageColumnIndex);
+                        messages.add(message);
+                    }
+                }
+                cursor.close();
+            }
+            return messages;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result) {
+            super.onPostExecute(result);
+            chatMessages.addAll(result);
+            chatAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class SendMessageTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String message = params[0];
+
+            ContentValues values = new ContentValues();
+            values.put(ChatDatabaseHelper.KEY_MESSAGE, message); // Insert message
+            db.insert(ChatDatabaseHelper.TABLE_NAME, null, values);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            String message = messageEditText.getText().toString().trim();
+            chatMessages.add(message);
+            chatAdapter.notifyDataSetChanged();
+
+            messageEditText.setText("");
+
+            Toast.makeText(ChatWindow.this, "Message sent!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private class ChatAdapter extends ArrayAdapter<String> {
-        public ChatAdapter(Context ctx) {
+
+        public ChatAdapter(Context ctx, ArrayList<String> chatMessages) {
             super(ctx, 0, chatMessages);
         }
 
-        //returns the chat message at a specific position in the list
         @Override
         public int getCount() {
             return chatMessages.size();
         }
 
+        @Override
         public String getItem(int position) {
             return chatMessages.get(position);
         }
@@ -76,7 +143,6 @@ public class ChatWindow extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = ChatWindow.this.getLayoutInflater();
-
             View result;
 
             if (position % 2 == 0) {
@@ -85,12 +151,18 @@ public class ChatWindow extends AppCompatActivity {
                 result = inflater.inflate(R.layout.chat_row_outgoing, null);
             }
 
-            TextView getMessage = (TextView)result.findViewById(R.id.message_text);
+            TextView getMessage = result.findViewById(R.id.message_text);
             getMessage.setText(getItem(position));
 
-
             return result;
-        };
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
     }
 }

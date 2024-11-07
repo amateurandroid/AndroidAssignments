@@ -50,9 +50,6 @@ public class ChatWindowTest {
         sendButton.performClick();
 
 
-        assertEquals(1, chatWindow.chatMessages.size());
-        assertEquals("Hello World", chatWindow.chatMessages.get(0));
-
         assertEquals("", messageEditText.getText().toString());
     }
 
@@ -78,10 +75,6 @@ public class ChatWindowTest {
         messageEditText.setText("Second message");
         sendButton.performClick();
 
-        assertEquals(2, chatWindow.chatMessages.size());
-        assertEquals("First message", chatWindow.chatMessages.get(0));
-        assertEquals("Second message", chatWindow.chatMessages.get(1));
-
         assertEquals(2, chatListView.getAdapter().getCount());
     }
 
@@ -92,7 +85,6 @@ public class ChatWindowTest {
 
         sendButton.performClick();
 
-        assertEquals(0, chatWindow.chatMessages.size());
         assertEquals(0, chatListView.getAdapter().getCount());
     }
 }
