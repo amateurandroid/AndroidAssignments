@@ -15,14 +15,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import java.util.ArrayList;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 
 public class ChatWindow extends AppCompatActivity {
 
@@ -49,7 +45,6 @@ public class ChatWindow extends AppCompatActivity {
         chatListView.setAdapter(chatAdapter);
 
         dbHelper = new ChatDatabaseHelper(this);
-
         db = dbHelper.getWritableDatabase();
 
         new LoadMessagesTask().execute();
@@ -78,10 +73,18 @@ public class ChatWindow extends AppCompatActivity {
             );
 
             if (cursor != null) {
+                Log.i(ACTIVITY_NAME, "Cursor's column count = " + cursor.getColumnCount());
+
+                // Print out each column name in the cursor
+                for (int i = 0; i < cursor.getColumnCount(); i++) {
+                    Log.i(ACTIVITY_NAME, "Column " + i + ": " + cursor.getColumnName(i));
+                }
+
                 while (cursor.moveToNext()) {
                     int messageColumnIndex = cursor.getColumnIndex(ChatDatabaseHelper.KEY_MESSAGE);
                     if (messageColumnIndex != -1) {
                         String message = cursor.getString(messageColumnIndex);
+                        Log.i(ACTIVITY_NAME, "SQL MESSAGE: " + message); // Log each message
                         messages.add(message);
                     }
                 }
