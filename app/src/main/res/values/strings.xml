@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Application name -->
     <string name="app_name">AndroidAssignments</string>
     <string name="hello_message">Hello World!</string>
     <string name="ButtonText">I\'m a button</string>
@@ -58,4 +59,24 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
+    <string name="weather_icon">WeatherForecast</string>
+    <string name="current_temperature">Current Temperature</string>
+    <string name="min_temperature">Min Temperature</string>
+    <string name="max_temperature">Max Temperature</string>
+    <string name="progress_loading">Loading weather data...</string>
+
+    <string-array name="canadian_cities">
+        <item>Ottawa</item>
+        <item>Toronto</item>
+        <item>Vancouver</item>
+        <item>Montreal</item>
+        <item>Calgary</item>
+        <item>Edmonton</item>
+        <item>Winnipeg</item>
+        <item>Quebec City</item>
+        <item>Hamilton</item>
+        <item>Kitchener</item>
+    </string-array>
+
 </resources>

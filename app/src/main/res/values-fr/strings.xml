@@ -22,6 +22,7 @@
     <string name="choice_two">Choix 2</string>
     <string name="choice_three">Choix 3</string>
     <string name="choice_about">À propos</string>
+    <string name="weather_icon">Prévisions météorologiques</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
@@ -58,4 +59,8 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="current_temperature">Température actuelle</string>
+    <string name="min_temperature">Température minimale</string>
+    <string name="max_temperature">Température maximale</string>
+    <string name="progress_loading">Chargement des données météo...</string>
 </resources>

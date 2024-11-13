@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="Base.Theme.AndroidAssignments" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="buttonStyle">@style/CustomButtonStyle</item>
     </style>
